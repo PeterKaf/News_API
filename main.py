@@ -6,15 +6,15 @@ from bs4 import BeautifulSoup
 
 date = datetime.date.today()
 date = date - datetime.timedelta(days=1)
-print(date)
 
-topic = "Poland"
+topic = input("What topic do you want to read about? ")
+key = os.getenv("NEWS_API_KEY")
 url = f"https://newsapi.org/v2/everything?q={topic}" \
-      "&apiKey=46eb96df333448d28f904668d1642d92" \
+      f"&apiKey={key}" \
       f"&from={date}" \
       "&sortBy=relevancy" \
       "&language=en"
-key = os.getenv("NEWS_API_KEY")
+
 
 response = requests.get(url)
 data = response.json()
@@ -32,6 +32,7 @@ for article in data["articles"][:5]:
     soup = BeautifulSoup(description, "html.parser")
     stripped_description = soup.get_text()
 
-    content += f"<strong>Title:</strong> {title}<br><strong>Description:</strong> {stripped_description}<br><strong>URL:</strong> {news_url}<br><br>"
+    content += f"<strong>Title:</strong> {title}<br><strong>Description:</strong> {stripped_description}" \
+               f"<br><strong>URL:</strong> {news_url}<br><br>"
 
 send_email.send_email(content.encode("utf-8"))
