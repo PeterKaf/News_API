@@ -1,16 +1,26 @@
-# This is a sample Python script.
+import requests
+import datetime
+import send_email
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+date = datetime.date.today()
+date = date - datetime.timedelta(days=1)
+print(date)
 
+topic = "Poland"
+url = f"https://newsapi.org/v2/everything?q={topic}&apiKey=46eb96df333448d28f904668d1642d92&" \
+      f"from={date}&sortBy=relevancy&language=en&pageSize=5"
+key = os.getenv("NEWS_API_KEY")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+requests = requests.get(url)
+data = requests.json()
+content = """\
+Subject: News from NewsAPI.org\n
+"""
+for article in data["articles"]:
+    title = article["title"]
+    description = article["description"]
+    news_url = article["url"]
+    content += f"Title: {title}\nDescription: {description}\nURL: {news_url}\n\n"
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+send_email.send_email(content.encode("utf-8"))
