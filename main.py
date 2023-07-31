@@ -1,27 +1,38 @@
 import requests
 import datetime
 import send_email
-import os
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+import os
 
 
 # SETUP
+USE_ENV = True  # Set this to False if you want to use your own values instead of environment variables
+
 # This script is set up to work with environment variables, you can use it as explained in the README.md file,
 # or you can replace the variables with your own values, in a code block like the one commented below.
 
-# Set up your own credentials in environment variables (See README.md for more info)
-key = os.getenv("NEWS_API_KEY")
-sender_email = os.getenv("MAIL_APK_SENDER")
-sender_app_password = os.getenv("MAIL_APK_PASSWD")
-receiver_email = os.getenv("MAIL_APK_RECEIVER")
+if USE_ENV:
+    # Load environment variables from an .env file
+    load_dotenv()  # Use this if the .env file is in the same directory as this script
 
-# Or just replace the variables with your own values, like this:
-"""
-key = "ENTER YOUR OWN NEWS API KEY HERE
-sender_email = "ENTER YOUR OWN EMAIL ADDRESS HERE"
-sender_app_password = "ENTER YOUR OWN APP PASSWORD HERE"
-receiver_email = "ENTER RECEIVER EMAIL ADDRESS HERE"
-"""
+    # Or, specify the path to a specific .env file via code like this:
+    """
+    dotenv_path = "/path/to/your/.env"
+    # load_dotenv(dotenv_path)
+    """
+    # Assign environment variables to Python variables
+    key = os.environ.get("NEWS_API_KEY")
+    sender_email = os.environ.get("MAIL_APK_SENDER")
+    sender_app_password = os.environ.get("MAIL_APK_PASSWD")
+    receiver_email = os.environ.get("MAIL_APK_RECEIVER")
+else:
+    # In case you don`t want to use .env, you can replace the variables below with your own values
+    # Be careful not to commit your API key or your email credentials to a public repository
+    key = "ENTER YOUR OWN NEWS API KEY HERE"
+    sender_email = "ENTER YOUR OWN EMAIL ADDRESS HERE"
+    sender_app_password = "ENTER YOUR OWN APP PASSWORD HERE"
+    receiver_email = "ENTER RECEIVER EMAIL ADDRESS HERE"
 
 
 date = datetime.date.today()

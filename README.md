@@ -17,14 +17,43 @@ To run the project, follow these steps:
 2. Install the required dependencies by running `pip install -r requirements.txt`.
 3. Set up your email credentials and API key:
 
-    <b>Do not share your credentials with others </b>
-    - Replace `your_sender_email` with your own email address.
-    - Replace `your_sender_app_password` with an app password generated for your email account.
-    - Replace `your_receiver_email` with the email address where you want to receive the news.
-    - Replace `your_news_api_key` with your NewsAPI API key.
+   *There are two options to set up credentials:*
+
+   **Option 1: Provide Credentials in `.env` File (Recommended)**
+
+   - Create a `.env` file in the project directory.
+   - Add the following lines to the `.env` file:
+
+     ```
+     MAIL_APK_SENDER=your_sender_email 
+     MAIL_APK_PASSWD=your_sender_app_password 
+     MAIL_APK_RECEIVER=your_receiver_email 
+     NEWS_API_KEY=your_news_api_key
+     ```
+   - Replace the values with your own credentials.
    
+   **Option 2: Change variables inside `main.py` file**
+
+   - Open the `main.py` file.
+   - Change from True to False the following line:
+     ```
+     USE_ENV = True
+     ```
+   - Locate the following variables inside:
+
+     ```
+     key = "ENTER YOUR OWN NEWS API KEY HERE
+     sender_email = "ENTER YOUR OWN EMAIL ADDRESS HERE"
+     sender_app_password = "ENTER YOUR OWN APP PASSWORD HERE"
+     receiver_email = "ENTER RECEIVER EMAIL ADDRESS HERE"
+     ```
+   - Replace the values with your own credentials.
+   - 
+
+   <b>Note: Make sure to keep your credentials secure and do not share them with others.</b>
 4. Run the `main.py` file: `python main.py`.
 5. Enter the topic you want to read about when prompted.
+6. Check your email inbox for the news articles.
 
 ## Dependencies
 
@@ -34,3 +63,4 @@ The project requires the following dependencies. You can install them using the 
 - `bs4` (BeautifulSoup): For parsing the HTML description of the news articles.
 - `smtplib`: For sending the email.
 - `ssl`: For creating an SSL context.
+- `dotenv`: For loading environment variables from a `.env` file.
