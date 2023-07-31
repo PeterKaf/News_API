@@ -48,7 +48,6 @@ To run the project, follow these steps:
      receiver_email = "ENTER RECEIVER EMAIL ADDRESS HERE"
      ```
    - Replace the values with your own credentials.
-   - 
 
    <b>Note: Make sure to keep your credentials secure and do not share them with others.</b>
 4. Run the `main.py` file: `python main.py`.
